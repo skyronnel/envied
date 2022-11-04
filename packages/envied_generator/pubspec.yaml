@@ -15,8 +15,8 @@ dependencies:
       path: packages/envied
   build: ^2.3.0
   dotenv: ^3.0.0
-  source_gen: ^0.9.10+5
-  analyzer: ^1.0.0
+  source_gen: ^1.0.0
+  analyzer: ^2.1.0
 
 dev_dependencies:
   lints: ^2.0.0
