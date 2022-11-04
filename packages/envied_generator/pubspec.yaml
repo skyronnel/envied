@@ -12,6 +12,7 @@ dependencies:
     git:
       url: https://github.com/skyronnel/envied.git
       ref: main
+      path: packages/envied
   build: ^2.3.0
   dotenv: ^4.0.1
   source_gen: ^1.2.2
