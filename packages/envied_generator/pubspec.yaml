@@ -8,7 +8,10 @@ environment:
   sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
-  envied: ^0.2.3
+  envied:
+    git:
+      url: https://github.com/skyronnel/envied.git
+      ref: main
   build: ^2.3.0
   dotenv: ^4.0.1
   source_gen: ^1.2.2
