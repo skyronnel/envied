@@ -26,7 +26,7 @@ class Envied {
   /// ```dart
   /// abstract class _Foo {}
   /// ```
-  final String? name;
+  final String name;
 
   /// Allows all the values to be encrypted using a random
   /// generated key that is then XOR'd with the encrypted
@@ -37,15 +37,15 @@ class Envied {
   final bool obfuscate;
 
   const Envied(
-      {String? path, bool? requireEnvFile, this.name, this.obfuscate = false})
-      : path = path ?? '.env',
-        requireEnvFile = requireEnvFile ?? false;
+      {String path = "", bool requireEnvFile = false, this.name = "", this.obfuscate = false})
+      : path = path != "" ? path : '.env',
+        requireEnvFile = requireEnvFile;
 }
 
 /// Annotation used to specify an environment variable that should be generated from the `.env` file specified in the [Envied] path parameter.
 class EnviedField {
   /// The environment variable name specified in the `.env` file to generate for the annotated variable
-  final String? varName;
+  final String varName;
 
   /// Allows this values to be encrypted using a random
   /// generated key that is then XOR'd with the encrypted
@@ -53,7 +53,7 @@ class EnviedField {
   /// Please note that the values can not be offered with
   /// the `const` qualifier, but only with `final`.
   /// **Overrides the per-class obfuscate option!**
-  final bool? obfuscate;
+  final bool obfuscate;
 
-  const EnviedField({this.varName, this.obfuscate});
+  const EnviedField({this.varName = "", this.obfuscate = false});
 }

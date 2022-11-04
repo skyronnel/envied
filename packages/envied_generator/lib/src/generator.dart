@@ -31,7 +31,7 @@ class EnviedGenerator extends GeneratorForAnnotation<Envied> {
     final config = Envied(
       path: annotation.read('path').literalValue as String,
       requireEnvFile:
-          annotation.read('requireEnvFile').literalValue as bool ?? false,
+          annotation.read('requireEnvFile').literalValue as bool ? true : false,
       name: annotation.read('name').literalValue as String,
       obfuscate: annotation.read('obfuscate').literalValue as bool,
     );
@@ -48,25 +48,25 @@ class EnviedGenerator extends GeneratorForAnnotation<Envied> {
     TypeChecker enviedFieldChecker = TypeChecker.fromRuntime(EnviedField);
     final lines = enviedEl.fields.map((fieldEl) {
       if (enviedFieldChecker.hasAnnotationOf(fieldEl)) {
-        DartObject dartObject = enviedFieldChecker.firstAnnotationOf(fieldEl);
+        DartObject? dartObject = enviedFieldChecker.firstAnnotationOf(fieldEl);
         ConstantReader reader = ConstantReader(dartObject);
 
-        String varName =
-            reader.read('varName').literalValue as String ?? fieldEl.name;
+        Object varName =
+            reader.read('varName').literalValue ?? fieldEl.name;
 
-        String varValue;
+        String? varValue;
         if (envs.containsKey(varName)) {
           varValue = envs[varName];
         } else if (Platform.environment.containsKey(varName)) {
           varValue = Platform.environment[varName];
         }
 
-        final bool obfuscate =
-            reader.read('obfuscate').literalValue as bool ?? config.obfuscate;
+        final Object? obfuscate =
+            reader.read('obfuscate').literalValue ?? config.obfuscate;
 
-        return (obfuscate ? generateLineEncrypted : generateLine)(
+        return (obfuscate as bool ? generateLineEncrypted : generateLine)(
           fieldEl,
-          varValue,
+          varValue!,
         );
       } else {
         return '';
@@ -74,7 +74,7 @@ class EnviedGenerator extends GeneratorForAnnotation<Envied> {
     });
 
     return '''
-    class _${config.name ?? enviedEl.name} {
+    class _${config.name.isNotEmpty ? config.name : enviedEl.name} {
       ${lines.toList().join()}
     }
     ''';

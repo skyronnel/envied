@@ -8,7 +8,7 @@ import 'package:source_gen/source_gen.dart';
 /// Since this function also does the type casting,
 /// an [InvalidGenerationSourceError] will also be thrown if
 /// the type can't be casted, or is not supported.
-String generateLine(FieldElement field, String? value) {
+String generateLine(FieldElement field, String value) {
   if (value == null) {
     throw InvalidGenerationSourceError(
       'Environment variable not found for field `${field.name}`.',
